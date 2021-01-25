@@ -10,7 +10,7 @@ const generatePage = require("./src/page-template.js");
 const Team = {
   ManagerArr: [],
   EngineerArr: [],
-  InterArr: [],
+  InternArr: [],
 };
 
 const getManagers = () => {
@@ -38,16 +38,10 @@ const getManagers = () => {
       },
     ])
     .then((ManagerData) => {
-      Team.ManagerArr.push(
-        new Manager(
-          ManagerData.name,
-          ManagerData.id,
-          ManagerData.email,
-          ManagerData.officeNumber
-        )
-      );
-      console.log(Team.ManagerArr);
-      //Run();
+      const { name, id, email, officeNumber } = ManagerData;
+      manager = new Manager(name, id, email, officeNumber);
+      Team.ManagerArr.push(manager);
+      Run();
     });
 };
 
@@ -76,7 +70,9 @@ const getEngineers = () => {
       },
     ])
     .then((EngineerData) => {
-      Team.EngineerArr.push(EngineerData);
+      const { name, id, email, github } = EngineerData;
+      engineer = new Engineer(name, id, email, github);
+      Team.EngineerArr.push(engineer);
       Run();
     });
 };
@@ -106,7 +102,9 @@ const getInterns = () => {
       },
     ])
     .then((InternData) => {
-      Team.InterArr.push(InternData);
+      const { name, id, email, school } = InternData;
+      intern = new Intern(name, id, email, school);
+      Team.InternArr.push(intern);
       Run();
     });
 };
@@ -155,8 +153,11 @@ const Run = () => {
           return;
         }
       } else {
-        //generatePage(Team);
-        //writeFile(Team);
+        generatePage(Team).then((pageHTML) => {
+          writeFile(pageHTML).then((writeFileResponse) => {
+            console.log(writeFileResponse);
+          });
+        });
       }
     })
     .catch((err) => {
