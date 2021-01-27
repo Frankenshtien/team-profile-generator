@@ -3,7 +3,7 @@
 ## Description:
 
 This node application is designed to take in user information about their work team, and output a styled HTML page to use as a team portfolio. I made it using NPM packages Inquirer for information gathering, and Jest for testing.
-Video Demo available at: https://drive.google.com/file/d/1dev7AeQ0RLagwQUmvMBCztMi4RvAXCrI/view
+Video Demo available at: https://drive.google.com/file/d/1BAcVfZ0j_oio7VP3cTnqN9zNnpQpez0K/view
 
 ## Table of Contents
 

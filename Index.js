@@ -152,6 +152,7 @@ const Run = () => {
       }
     } else {
       writeFile(Team);
+      console.log("File written!");
     }
   });
 };
