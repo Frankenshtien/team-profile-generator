@@ -1,9 +1,8 @@
 const fs = require("fs");
-const { resolve } = require("path");
 
 const generateManagers = (ManagerArr) => {
   if (ManagerArr.length > 0) {
-    return (ManagerHTML = ManagerArr.map((manager) => {
+    return ManagerArr.map((manager) => {
       return `
         <div class="card m-2" style="width: 18rem">
         <div class="card-body">
@@ -13,17 +12,15 @@ const generateManagers = (ManagerArr) => {
             Employee: ${manager.getId()}
           </p>
           <p class="card-text">
-            Email: ${manager.getEmail()}
+            Email: <a href ="mailto:${manager.getEmail()}">${manager.getEmail()}</a>
           </p>
           <p class="card-text">
             Office Number: ${manager.getOfficeNumber()}
           </p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
         </div>
         </div>
         `;
-    }));
+    }).join("");
   } else {
     return "";
   }
@@ -31,7 +28,7 @@ const generateManagers = (ManagerArr) => {
 
 const generateEngineers = (EngineerArr) => {
   if (EngineerArr.length > 0) {
-    return (EngineerHTML = EngineerArr.map((engineer) => {
+    const EngineerHTML = EngineerArr.map((engineer) => {
       return `
         <div class="card m-2" style="width: 18rem">
         <div class="card-body">
@@ -41,17 +38,16 @@ const generateEngineers = (EngineerArr) => {
             Employee: ${engineer.getId()}
           </p>
           <p class="card-text">
-            Email: ${engineer.getEmail()}
+            Email: <a href ="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a>
           </p>
           <p class="card-text">
-            GitHub: ${engineer.getGithub()}
+            GitHub: <a href=https://github.com/${engineer.getGithub()}>${engineer.getGithub()}</a>
           </p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
         </div>
         </div>
         `;
-    }));
+    });
+    return EngineerHTML.join("");
   } else {
     return "";
   }
@@ -59,7 +55,7 @@ const generateEngineers = (EngineerArr) => {
 
 const generateInterns = (InternArr) => {
   if (InternArr.length > 0) {
-    return (InternHTML = InternArr.map((intern) => {
+    return InternArr.map((intern) => {
       return `
         <div class="card m-2" style="width: 18rem">
         <div class="card-body">
@@ -69,17 +65,15 @@ const generateInterns = (InternArr) => {
             Employee: ${intern.getId()}
           </p>
           <p class="card-text">
-            Email: ${intern.getEmail()}
+            Email: <a href ="mailto:${intern.getEmail()}">${intern.getEmail()}</a>
           </p>
           <p class="card-text">
             School: ${intern.getSchool()}
           </p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
         </div>
         </div>
         `;
-    }));
+    }).join("");
   } else {
     return "";
   }
@@ -90,7 +84,7 @@ const makeHTML = (Team) => {
   const managers = generateManagers(ManagerArr);
   const engineers = generateEngineers(EngineerArr);
   const interns = generateInterns(InternArr);
-  return `
+  const html = `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -108,9 +102,9 @@ const makeHTML = (Team) => {
     <h1 class="bg-dark text-white text-center p-4">Placeholder Header</h1>
     <div class="container">
     <div class="row text-center justify-content-center">
-    ${managers.join("")}
-    ${engineers.join("")}
-    ${interns.join("")}
+    ${managers}
+    ${engineers}
+    ${interns}
     </div>
     </div>
 
@@ -122,6 +116,7 @@ const makeHTML = (Team) => {
   </body>
 </html>
   `;
+  return html;
 };
 
 module.exports = makeHTML;

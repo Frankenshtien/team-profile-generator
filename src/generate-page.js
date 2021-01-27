@@ -1,18 +1,13 @@
 const fs = require("fs");
+const makeHTML = require("./page-template");
 
 const writeFile = (Team) => {
-  fileContent = makeHTML(Team);
-  return new Promise((resolve, reject) => {
-    fs.writeFile("./dist/index.html", "something", (err) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve({
-        ok: true,
-        message: "File created!",
-      });
-    });
+  const fileContent = makeHTML(Team);
+
+  return fs.writeFile("./dist/index.html", fileContent, (err) => {
+    if (err) {
+      return "err";
+    }
   });
 };
 

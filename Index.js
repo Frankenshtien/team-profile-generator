@@ -5,7 +5,6 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
 const writeFile = require("./src/generate-page.js");
-const generatePage = require("./src/page-template.js");
 
 const Team = {
   ManagerArr: [],
@@ -39,7 +38,7 @@ const getManagers = () => {
     ])
     .then((ManagerData) => {
       const { name, id, email, officeNumber } = ManagerData;
-      manager = new Manager(name, id, email, officeNumber);
+      const manager = new Manager(name, id, email, officeNumber);
       Team.ManagerArr.push(manager);
       Run();
     });
@@ -71,7 +70,7 @@ const getEngineers = () => {
     ])
     .then((EngineerData) => {
       const { name, id, email, github } = EngineerData;
-      engineer = new Engineer(name, id, email, github);
+      const engineer = new Engineer(name, id, email, github);
       Team.EngineerArr.push(engineer);
       Run();
     });
@@ -103,7 +102,7 @@ const getInterns = () => {
     ])
     .then((InternData) => {
       const { name, id, email, school } = InternData;
-      intern = new Intern(name, id, email, school);
+      const intern = new Intern(name, id, email, school);
       Team.InternArr.push(intern);
       Run();
     });
@@ -134,35 +133,27 @@ const selectEmployee = () => {
 };
 
 const Run = () => {
-  selectEmployee()
-    .then((response) => {
-      if (response.employeeType) {
-        if (response.employeeType[0] === "Engineer") {
-          getEngineers();
-          return;
-        }
-        if (response.employeeType[0] === "Intern") {
-          getInterns();
-          return;
-        }
-        if (response.employeeType[0] === "Manager") {
-          getManagers();
-        } else {
-          console.log("**No employee type selected.**");
-          selectEmployee();
-          return;
-        }
-      } else {
-        generatePage(Team).then((pageHTML) => {
-          writeFile(pageHTML).then((writeFileResponse) => {
-            console.log(writeFileResponse);
-          });
-        });
+  selectEmployee().then((response) => {
+    if (response.employeeType) {
+      if (response.employeeType[0] === "Engineer") {
+        getEngineers();
+        return;
       }
-    })
-    .catch((err) => {
-      return err;
-    });
+      if (response.employeeType[0] === "Intern") {
+        getInterns();
+        return;
+      }
+      if (response.employeeType[0] === "Manager") {
+        getManagers();
+      } else {
+        console.log("**No employee type selected.**");
+        selectEmployee();
+        return;
+      }
+    } else {
+      writeFile(Team);
+    }
+  });
 };
 
 getManagers();
